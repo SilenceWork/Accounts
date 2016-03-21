@@ -48,6 +48,27 @@ public class DaoGenerator {
     private Template templateDaoUnitTest;
     private Template templateContentProvider;
 
+    public DaoGenerator(String templetePath) throws IOException {
+        System.out.println("greenDAO Generator");
+        System.out.println("Copyright 2011-2015 Markus Junginger, greenrobot.de. Licensed under GPL V3.");
+        System.out.println("This program comes with ABSOLUTELY NO WARRANTY");
+
+        patternKeepIncludes = compilePattern("INCLUDES");
+        patternKeepFields = compilePattern("FIELDS");
+        patternKeepMethods = compilePattern("METHODS");
+
+        Configuration config = new Configuration(Configuration.VERSION_2_3_23);
+        config.setClassForTemplateLoading(this.getClass(), "/");
+        config.setDirectoryForTemplateLoading(new File(templetePath));
+
+        templateDao = config.getTemplate("dao.ftl");
+        templateDaoMaster = config.getTemplate("dao-master.ftl");
+        templateDaoSession = config.getTemplate("dao-session.ftl");
+        templateEntity = config.getTemplate("entity.ftl");
+        templateDaoUnitTest = config.getTemplate("dao-unit-test.ftl");
+        templateContentProvider = config.getTemplate("content-provider.ftl");
+    }
+
     public DaoGenerator() throws IOException {
         System.out.println("greenDAO Generator");
         System.out.println("Copyright 2011-2015 Markus Junginger, greenrobot.de. Licensed under GPL V3.");
@@ -59,7 +80,6 @@ public class DaoGenerator {
 
         Configuration config = new Configuration(Configuration.VERSION_2_3_23);
         config.setClassForTemplateLoading(this.getClass(), "/");
-        config.setDirectoryForTemplateLoading(new File("/Users/yujinyang/tools/mygithub/Accounts/DaoGenerator/src-template"));
 
         templateDao = config.getTemplate("dao.ftl");
         templateDaoMaster = config.getTemplate("dao-master.ftl");

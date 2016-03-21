@@ -36,7 +36,7 @@ public class ExampleDaoGenerator {
         addNote(schema);
         addCustomerOrder(schema);
 
-        new DaoGenerator().generateAll(schema, "/Users/yujinyang/tools/mygithub/Accounts/app/src/main/java/");
+        new DaoGenerator("/Users/yujinyang/tools/mygithub/Accounts/DaoGenerator/src-template").generateAll(schema, "/Users/yujinyang/tools/mygithub/Accounts/app/src/main/java/");
     }
 
     private static void addNote(Schema schema) {
