@@ -32,19 +32,29 @@ public class ExampleDaoGenerator {
 
     public static void main(String[] args) throws Exception {
         Schema schema = new Schema(1000, "yjy.com.accounts.databases");
-
         addNote(schema);
-        addCustomerOrder(schema);
-
-        new DaoGenerator("/Users/yujinyang/tools/mygithub/Accounts/DaoGenerator/src-template").generateAll(schema, "/Users/yujinyang/tools/mygithub/Accounts/app/src/main/java/");
+        new DaoGenerator("/Users/yujinyang/tools/mygithub/Accounts/DaoGenerator/src-template").
+                generateAll(schema, "/Users/yujinyang/tools/mygithub/Accounts/app/src/main/java/");
     }
 
+    /**
+     * int      ID      主键ID
+     * double   coast   花费金额
+     * int      way     支付方式
+     * int      use     用途
+     * String   remark  备注
+     * date     date    时间
+     *
+     * @param schema
+     */
     private static void addNote(Schema schema) {
-        Entity note = schema.addEntity("account_db");
-        note.addIdProperty();
-        note.addStringProperty("text").notNull();
-        note.addStringProperty("comment");
-        note.addDateProperty("date");
+        Entity note = schema.addEntity("AccountInfo");
+        note.addIdProperty().primaryKey().autoincrement();
+        note.addDoubleProperty("cost").notNull();
+        note.addIntProperty("way").notNull();
+        note.addIntProperty("use").notNull();
+        note.addStringProperty("remark").notNull();
+        note.addDateProperty("date").notNull();
     }
 
     private static void addCustomerOrder(Schema schema) {

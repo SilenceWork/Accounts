@@ -1,5 +1,6 @@
 package yjy.com.accounts;
 
+import android.accounts.Account;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,6 +9,15 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import yjy.com.accounts.application.ACConst;
+import yjy.com.accounts.databases.AccountInfo;
+import yjy.com.accounts.databases.helper.ACDBHelper;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -26,6 +36,42 @@ public class AccountActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        initView();
+    }
+
+    private void initView() {
+        findViewById(R.id.load).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<AccountInfo> accounts = ACDBHelper.getInstance(AccountActivity.this).loadAllAccount();
+                StringBuilder sb = new StringBuilder();
+                for(AccountInfo accountInfo : accounts){
+                    sb.append(accountInfo.toString()+"\n");
+                }
+                ((TextView)findViewById(R.id.text)).setText(sb.toString());
+            }
+        });
+
+        findViewById(R.id.add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addAccount();
+            }
+        });
+    }
+
+    public int index;
+    private void addAccount() {
+        AccountInfo accountInfo = new AccountInfo();
+        accountInfo.setCost(30.3 + 10*index);
+        accountInfo.setWay(ACConst.WAY_APAY);
+        accountInfo.setUse(ACConst.USE_EAT);
+        accountInfo.setRemark("中午吃饭 " + index);
+        accountInfo.setDate(Calendar.getInstance().getTime());
+
+        ACDBHelper.getInstance(this).saveAccount(accountInfo);
+        index ++;
     }
 
     @Override
