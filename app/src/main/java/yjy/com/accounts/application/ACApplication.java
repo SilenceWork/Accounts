@@ -11,6 +11,8 @@ import yjy.com.accounts.databases.DaoSession;
  */
 public class ACApplication extends Application{
 
+    public static Context context;
+
     private static DaoMaster daoMaster;
     private static DaoSession daoSession;
 
@@ -53,5 +55,6 @@ public class ACApplication extends Application{
     @Override
     public void onCreate() {
         super.onCreate();
+        context = this;
     }
 }

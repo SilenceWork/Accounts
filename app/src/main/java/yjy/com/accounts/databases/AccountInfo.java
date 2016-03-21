@@ -85,19 +85,4 @@ public class AccountInfo {
     public void setDate(java.util.Date date) {
         this.date = date;
     }
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("KEY ID:" + id + "\n");
-        stringBuilder.append("COST:" + cost + "\n");
-        stringBuilder.append("WAY:" + way + "\n");
-        stringBuilder.append("USE:" + use + "\n");
-        stringBuilder.append("REMARK:" + remark + "\n");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        stringBuilder.append("DATE:" + sdf.format(date) + "\n");
-
-        return stringBuilder.toString();
-    }
-
 }

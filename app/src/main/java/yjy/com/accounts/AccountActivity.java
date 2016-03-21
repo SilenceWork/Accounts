@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -47,7 +48,7 @@ public class AccountActivity extends AppCompatActivity {
                 List<AccountInfo> accounts = ACDBHelper.getInstance(AccountActivity.this).loadAllAccount();
                 StringBuilder sb = new StringBuilder();
                 for(AccountInfo accountInfo : accounts){
-                    sb.append(accountInfo.toString()+"\n");
+                    sb.append(convert2String(accountInfo)+"\n");
                 }
                 ((TextView)findViewById(R.id.text)).setText(sb.toString());
             }
@@ -87,5 +88,17 @@ public class AccountActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private String convert2String(AccountInfo info){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("KEY ID:" + info.getId() + "\n");
+        stringBuilder.append("COST:" + info.getCost() + "\n");
+        stringBuilder.append("WAY:" + ACConst.getWayString(info.getWay()) + "\n");
+        stringBuilder.append("USE:" + ACConst.getUseString(info.getUse()) + "\n");
+        stringBuilder.append("REMARK:" + info.getRemark() + "\n");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        stringBuilder.append("DATE:" + sdf.format(info.getDate()) + "\n");
+        return stringBuilder.toString();
     }
 }
