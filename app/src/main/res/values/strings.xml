@@ -20,4 +20,11 @@
     <string name="use_taxi">打车</string>
     <string name="use_market">超市</string>
     <string name="use_other">其他</string>
+
+    <string-array name="usages">
+        <item>吃饭</item>
+        <item>打车</item>
+        <item>超市</item>
+        <item>其他</item>
+    </string-array>
 </resources>
