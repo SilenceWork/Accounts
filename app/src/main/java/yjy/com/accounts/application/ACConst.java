@@ -14,12 +14,22 @@ public class ACConst {
     public static final int WAY_WX = 0x1025;
     public static final int WAY_CARD = 0x1026;
     public static final int WAY_CASH = 0x1027;
+    public static final int WAY_OTHER = 0x1028;
 
 
     public static final int USE_EAT = 0x2048;
     public static final int USE_TAXI = 0x2049;
     public static final int USE_MARKET = 0x2050;
+    public static final int USE_OTHER = 0x2051;
 
+    public static final int[] uses = new int[]{ACConst.USE_EAT,ACConst.USE_TAXI,ACConst.USE_MARKET,ACConst.USE_OTHER};
+
+    public static int getUse(int index){
+        if(index < 0 || index > uses.length){
+            return -1;
+        }
+        return uses[index];
+    }
 
     public static String getWayString(int way){
         int stringR;

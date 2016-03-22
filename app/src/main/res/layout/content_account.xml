@@ -22,23 +22,25 @@
             android:textSize="20sp" />
 
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text= "金额"
+                android:text="金额"
                 android:textSize="20sp" />
 
             <EditText
-                android:layout_marginLeft="10dp"
+                android:id="@+id/cost_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:hint="0.0"
-                android:maxEms="10" />
+                android:maxEms="10"
+                android:numeric="integer" />
 
         </LinearLayout>
 
@@ -54,75 +56,85 @@
                 android:text="方式"
                 android:textSize="20sp" />
 
-            <ImageView
-                android:layout_marginLeft="10dp"
-                android:layout_width="40dp"
-                android:scaleType="fitXY"
-                android:layout_height="40dp"
-                android:src="@mipmap/apay" />
+            <RadioGroup
+                android:id="@+id/way_radiogroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <ImageView
-                android:layout_marginLeft="5dp"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/wx" />
+                <RadioButton
+                    android:id="@+id/way_apay_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/way_apay"></RadioButton>
 
-            <ImageView
-                android:layout_marginLeft="5dp"
-                android:layout_width="40dp"
-                android:scaleType="fitXY"
-                android:layout_height="40dp"
-                android:src="@mipmap/card" />
+                <RadioButton
+                    android:id="@+id/way_wx_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/way_wx"></RadioButton>
 
-            <ImageView
-                android:layout_marginLeft="5dp"
-                android:layout_width="40dp"
-                android:scaleType="fitXY"
-                android:layout_height="40dp"
-                android:src="@mipmap/cash" />
+                <RadioButton
+                    android:id="@+id/way_card_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/way_card"></RadioButton>
+
+                <RadioButton
+                    android:id="@+id/way_cash_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/way_cash"></RadioButton>
+
+                <RadioButton
+                    android:id="@+id/way_other_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/way_other"></RadioButton>
+            </RadioGroup>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text= "用途"
+                android:text="用途"
                 android:textSize="20sp" />
 
             <Spinner
-                android:layout_marginLeft="10dp"
-                android:id = "@+id/use_spanner"
-                android:layout_width = "wrap_content"
-                android:layout_height ="wrap_content" >
-            </Spinner >
+                android:id="@+id/use_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"></Spinner>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text= "备注"
+                android:text="备注"
                 android:textSize="20sp" />
 
             <EditText
-                android:layout_marginLeft="10dp"
+                android:id="@+id/remark_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="3"
-                android:hint="花钱干嘛了！！说！！"/>
+                android:layout_marginLeft="10dp"
+                android:hint="花钱干嘛了！！说！！"
+                android:lines="3" />
 
         </LinearLayout>
 
