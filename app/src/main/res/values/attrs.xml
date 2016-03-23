@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="Wheel">
-        <attr format="integer" name="ticks" />
-        <attr format="integer" name="numRotations" />
+        <attr name="ticks" format="integer"/>
+        <attr name="numRotations" format="integer"/>
     </declare-styleable>
-    
+
     <declare-styleable name="WheelRadio">
-        <attr format="integer" name="smallTicks" />
-        <attr format="integer" name="bigTicks" />
-        <attr format="color|reference" name="valueIndicatorColor" />
-        <attr format="color|reference" name="bigIndicatorColor" />
-        <attr format="color|reference" name="smallIndicatorColor" />
-    </declare-styleable>    
+        <attr name="smallTicks" format="integer"/>
+        <attr name="bigTicks" format="integer"/>
+        <attr name="valueIndicatorColor" format="color|reference"/>
+        <attr name="bigIndicatorColor" format="color|reference"/>
+        <attr name="smallIndicatorColor" format="color|reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="FlowLayout">
+        <attr name="android:gravity"/>
+    </declare-styleable>
+    <declare-styleable name="FlowLayout_Layout">
+        <attr name="android:layout_gravity"/>
+    </declare-styleable>
 </resources>

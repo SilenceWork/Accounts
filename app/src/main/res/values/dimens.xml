@@ -2,4 +2,9 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="app_widget_size_45dp">45dp</dimen>
+    <dimen name="app_text_size_large">24sp</dimen>
+    <dimen name="app_text_size_middle">18sp</dimen>
+    <dimen name="app_text_size_small">12sp</dimen>
 </resources>
