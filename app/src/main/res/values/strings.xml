@@ -27,4 +27,11 @@
         <item>超市</item>
         <item>其他</item>
     </string-array>
+
+    <string name="cost_count">金额</string>
+    <string name="cost_count_with_colon">金额:</string>
+    <string name="pay_method">支付方式</string>
+    <string name="pay_method_with_colon">支付方式:</string>
+    <string name="cost_way">花费用途</string>
+    <string name="cost_way_with_colon">花费用途:</string>
 </resources>
