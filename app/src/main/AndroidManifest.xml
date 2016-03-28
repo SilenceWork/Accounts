@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="yjy.com.accounts"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    package="yjy.com.accounts"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:name=".application.ACApplication"
@@ -20,8 +21,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".function.list.AccountChartListActivity"/>
-        <activity android:name=".function.list.AccountDetailListActivity"/>
+        <activity
+            android:name=".function.list.AccountChartListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".function.list.AccountDetailListActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

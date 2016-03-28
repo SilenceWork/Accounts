@@ -1,22 +1,5 @@
 package yjy.com.accounts.function.note;
 
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -24,6 +7,25 @@ import yjy.com.accounts.R;
 import yjy.com.accounts.application.ACConst;
 import yjy.com.accounts.control.AccountController;
 import yjy.com.accounts.databases.AccountInfo;
+import yjy.com.accounts.function.list.AccountDetailListActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -49,8 +51,8 @@ public class AccountActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "Replace with your own action",
+                        Snackbar.LENGTH_LONG).setAction("Action", null).show();
             }
         });
 
@@ -59,60 +61,67 @@ public class AccountActivity extends AppCompatActivity {
 
     private void initView() {
 
-        cost_edt = (EditText)findViewById(R.id.cost_edt);
+        cost_edt = (EditText) findViewById(R.id.cost_edt);
 
-        way_radiogroup = (RadioGroup)findViewById(R.id.way_radiogroup);
-        way_radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch (radioGroup.getCheckedRadioButtonId()) {
-                    case R.id.way_apay_radio:
-                        mWay = ACConst.WAY_APAY;
-                        break;
-                    case R.id.way_wx_radio:
-                        mWay = ACConst.WAY_WX;
-                        break;
-                    case R.id.way_cash_radio:
-                        mWay = ACConst.WAY_CASH;
-                        break;
-                    case R.id.way_card_radio:
-                        mWay = ACConst.WAY_CARD;
-                        break;
-                    case R.id.way_other_radio:
-                        mWay = ACConst.WAY_OTHER;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        });
+        way_radiogroup = (RadioGroup) findViewById(R.id.way_radiogroup);
+        way_radiogroup
+                .setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                        switch (radioGroup.getCheckedRadioButtonId()) {
+                        case R.id.way_apay_radio:
+                            mWay = ACConst.WAY_APAY;
+                            break;
+                        case R.id.way_wx_radio:
+                            mWay = ACConst.WAY_WX;
+                            break;
+                        case R.id.way_cash_radio:
+                            mWay = ACConst.WAY_CASH;
+                            break;
+                        case R.id.way_card_radio:
+                            mWay = ACConst.WAY_CARD;
+                            break;
+                        case R.id.way_other_radio:
+                            mWay = ACConst.WAY_OTHER;
+                            break;
+                        default:
+                            break;
+                        }
+                    }
+                });
         way_radiogroup.check(R.id.way_card_radio);
 
-        use_spinner = (Spinner)findViewById(R.id.use_spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,
-                getResources().getStringArray(R.array.usages));
+        use_spinner = (Spinner) findViewById(R.id.use_spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, getResources()
+                        .getStringArray(R.array.usages));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         use_spinner.setAdapter(adapter);
-        use_spinner.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
-            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                mUse = ACConst.getUse(arg2);
-            }
+        use_spinner
+                .setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+                    public void onItemSelected(AdapterView<?> arg0, View arg1,
+                            int arg2, long arg3) {
+                        mUse = ACConst.getUse(arg2);
+                    }
 
-            public void onNothingSelected(AdapterView<?> arg0) {
-            }
-        });
+                    public void onNothingSelected(AdapterView<?> arg0) {
+                    }
+                });
 
-        remark_edt = (EditText)findViewById(R.id.remark_edt);
+        remark_edt = (EditText) findViewById(R.id.remark_edt);
 
         findViewById(R.id.load).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<AccountInfo> accounts = AccountController.getController().getAllAccountList();
+                List<AccountInfo> accounts = AccountController.getController()
+                        .getAllAccountList();
                 StringBuilder sb = new StringBuilder();
                 for (AccountInfo accountInfo : accounts) {
                     sb.append(convert2String(accountInfo) + "\n");
                 }
                 ((TextView) findViewById(R.id.text)).setText(sb.toString());
+                AccountActivity.this.startActivity(new Intent(
+                        AccountActivity.this, AccountDetailListActivity.class));
             }
         });
 
@@ -123,17 +132,18 @@ public class AccountActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     private void addAccount() {
-        if(checkAccount()){
-            boolean result = AccountController.getController().saveAccount(mCost,mWay,mUse,mRemark);
-            if(result){
-                Toast.makeText(this,"已入账",Toast.LENGTH_LONG).show();
+        if (checkAccount()) {
+            boolean result = AccountController.getController().saveAccount(
+                    mCost, mWay, mUse, mRemark);
+            if (result) {
+                Toast.makeText(this, "已入账", Toast.LENGTH_LONG).show();
                 reset();
-            }else{
-                Toast.makeText(this,"数据存储出现问题，请检查数据库",Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "数据存储出现问题，请检查数据库", Toast.LENGTH_LONG)
+                        .show();
             }
         }
     }
@@ -145,23 +155,24 @@ public class AccountActivity extends AppCompatActivity {
         remark_edt.setText("");
     }
 
-    private boolean checkAccount(){
+    private boolean checkAccount() {
         String costStr = cost_edt.getText().toString();
         try {
             mCost = Double.parseDouble(costStr);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
         }
-        if(mCost <= 0){
-            Toast.makeText(this,"花费不能为空",Toast.LENGTH_LONG).show();
+        if (mCost <= 0) {
+            Toast.makeText(this, "花费不能为空", Toast.LENGTH_LONG).show();
             return false;
         }
-        if(mWay < 0 || mUse < 0){
-            Toast.makeText(this,"用途、方式 数据异常。 检查常量对应关系",Toast.LENGTH_LONG).show();
+        if (mWay < 0 || mUse < 0) {
+            Toast.makeText(this, "用途、方式 数据异常。 检查常量对应关系", Toast.LENGTH_LONG)
+                    .show();
             return false;
         }
         mRemark = remark_edt.getText().toString();
-        if(TextUtils.isEmpty(mRemark)){
-            Toast.makeText(this,"没写备注！",Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(mRemark)) {
+            Toast.makeText(this, "没写备注！", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
@@ -182,12 +193,14 @@ public class AccountActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private String convert2String(AccountInfo info){
+    private String convert2String(AccountInfo info) {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("KEY ID:" + info.getId() + "\n");
         stringBuilder.append("COST:" + info.getCost() + "\n");
-        stringBuilder.append("WAY:" + ACConst.getWayString(info.getWay()) + "\n");
-        stringBuilder.append("USE:" + ACConst.getUseString(info.getUse()) + "\n");
+        stringBuilder.append("WAY:" + ACConst.getWayString(info.getWay())
+                + "\n");
+        stringBuilder.append("USE:" + ACConst.getUseString(info.getUse())
+                + "\n");
         stringBuilder.append("REMARK:" + info.getRemark() + "\n");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         stringBuilder.append("DATE:" + sdf.format(info.getDate()) + "\n");

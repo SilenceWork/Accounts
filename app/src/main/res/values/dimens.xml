@@ -5,6 +5,6 @@
 
     <dimen name="app_widget_size_45dp">45dp</dimen>
     <dimen name="app_text_size_large">24sp</dimen>
-    <dimen name="app_text_size_middle">18sp</dimen>
-    <dimen name="app_text_size_small">12sp</dimen>
+    <dimen name="app_text_size_middle">20sp</dimen>
+    <dimen name="app_text_size_small">16sp</dimen>
 </resources>

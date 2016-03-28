@@ -28,10 +28,27 @@
         <item>其他</item>
     </string-array>
 
+    <string-array name="pay_method">
+        <item>支付宝</item>
+        <item>微信</item>
+        <item>信用卡</item>
+        <item>现金</item>
+        <item>其他</item>
+    </string-array>
+
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="format_year_month_day">%1$s年%2$s月%3$s日</string>
+    <string name="date">日期</string>
+    <string name="date_with_colon">日期:</string>
+    <string name="please_select_date">请选择日期</string>
+    <string name="from_date">起始日期</string>
+    <string name="to_date">结束日期</string>
     <string name="cost_count">金额</string>
     <string name="cost_count_with_colon">金额:</string>
     <string name="pay_method">支付方式</string>
     <string name="pay_method_with_colon">支付方式:</string>
     <string name="cost_way">花费用途</string>
     <string name="cost_way_with_colon">花费用途:</string>
+    <string name="commont">备注</string>
 </resources>
