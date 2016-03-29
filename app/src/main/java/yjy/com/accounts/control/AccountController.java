@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import yjy.com.accounts.application.ACApplication;
-import yjy.com.accounts.application.ACConst;
 import yjy.com.accounts.databases.AccountInfo;
 import yjy.com.accounts.databases.helper.ACDBHelper;
 
@@ -19,7 +18,7 @@ public class AccountController {
 
     private Context context;
     private AccountController(){
-        context = ACApplication.context;
+        context = ACApplication.mApp;
     }
 
     public static AccountController getController(){

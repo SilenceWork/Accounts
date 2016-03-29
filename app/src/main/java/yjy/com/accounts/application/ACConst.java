@@ -1,7 +1,5 @@
 package yjy.com.accounts.application;
 
-import android.content.Context;
-
 import yjy.com.accounts.R;
 
 /**
@@ -50,7 +48,7 @@ public class ACConst {
                 stringR =  R.string.way_other;
                 break;
         }
-        return ACApplication.context.getResources().getString(stringR);
+        return ACApplication.mApp.getResources().getString(stringR);
     }
 
     public static String getUseString(int use){
@@ -69,6 +67,6 @@ public class ACConst {
                 stringR =  R.string.use_other;
                 break;
         }
-        return ACApplication.context.getResources().getString(stringR);
+        return ACApplication.mApp.getResources().getString(stringR);
     }
 }

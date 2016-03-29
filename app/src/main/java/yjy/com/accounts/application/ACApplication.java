@@ -1,60 +1,53 @@
 package yjy.com.accounts.application;
 
-import android.app.Application;
-import android.content.Context;
-
 import yjy.com.accounts.databases.DaoMaster;
 import yjy.com.accounts.databases.DaoSession;
+
+import android.app.Application;
 
 /**
  * Created by yujinyang on 16/3/21.
  */
-public class ACApplication extends Application{
+public class ACApplication extends Application {
 
-    public static Context context;
-
+    public static ACApplication mApp;
     private static DaoMaster daoMaster;
     private static DaoSession daoSession;
 
-
     /**
      * 取得DaoMaster
-     *
-     * @param context
      * @return
      */
-    public static DaoMaster getDaoMaster(Context context)
-    {
-        if (daoMaster == null)
-        {
-            DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(context, ACConst.DATABASE_NAME, null);
+    public static DaoMaster getDaoMaster() {
+        if (daoMaster == null) {
+            DaoMaster.OpenHelper helper = new DaoMaster.DevOpenHelper(mApp,
+                    ACConst.DATABASE_NAME, null);
             daoMaster = new DaoMaster(helper.getWritableDatabase());
         }
         return daoMaster;
     }
+
     /**
      * 取得DaoSession
-     *
-     * @param context
      * @return
      */
-    public static DaoSession getDaoSession(Context context)
-    {
-        if (daoSession == null)
-        {
-            if (daoMaster == null)
-            {
-                daoMaster = getDaoMaster(context);
+    public static DaoSession getDaoSession() {
+        if (daoSession == null) {
+            if (daoMaster == null) {
+                daoMaster = getDaoMaster();
             }
             daoSession = daoMaster.newSession();
         }
         return daoSession;
     }
 
-
     @Override
     public void onCreate() {
         super.onCreate();
-        context = this;
+        mApp = this;
+    }
+
+    public static ACApplication getInstance() {
+        return mApp;
     }
 }

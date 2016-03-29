@@ -1,11 +1,15 @@
 package yjy.com.accounts.function.list;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import yjy.com.accounts.R;
+import yjy.com.accounts.application.ACUserPreferences;
 import yjy.com.accounts.databases.AccountInfo;
 import yjy.com.accounts.databases.helper.ACDBHelper;
+import yjy.com.accounts.function.utility.DateRule;
 import yjy.com.accounts.function.widget.DateRangeSelectionView;
 import yjy.com.accounts.function.widget.KeywordSelectionView;
 import yjy.com.accounts.function.widget.MoneyRangeSelectionView;
@@ -27,10 +31,7 @@ public class AccountDetailListActivity extends Activity implements
     private KeywordSelectionView mPayMethodSelectionView;
     private KeywordSelectionView mCostWaySelectionView;
     private MoneyRangeSelectionView mMoneyRangeSelectionView;
-    private TableView<String[]> mAccountTablel;
-    private List<String> mCurrentPayMethodList;
-    private List<String> mCurrentCostWayList;
-    private List<String> mCurrentDateList;
+    private TableView<String[]> mAccountTable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class AccountDetailListActivity extends Activity implements
                 .setOnKeywordSelectedListener(mCostWaySelectedListener);
         this.mCostWaySelectionView.setKeywords(getResources().getStringArray(
                 R.array.usages));
-        this.mAccountTablel = (TableView<String[]>) findViewById(R.id.tv_cost_detail);
+        this.mAccountTable = (TableView<String[]>) findViewById(R.id.tv_cost_detail);
     }
 
     private KeywordSelectionView.OnKeywordSelectedListener mPayMethodSelectedListener = new KeywordSelectionView.OnKeywordSelectedListener() {
@@ -63,9 +64,8 @@ public class AccountDetailListActivity extends Activity implements
         @Override
         public void onKeywordSelected(List<String> selectedKeywords) {
             Log.d("Account", selectedKeywords.toString());
-            AccountDetailListActivity.this.mCurrentPayMethodList.clear();
-            AccountDetailListActivity.this.mCurrentPayMethodList
-                    .addAll(selectedKeywords);
+            ACUserPreferences.savePayMethods(selectedKeywords);
+            refreshData();
         }
     };
 
@@ -74,9 +74,8 @@ public class AccountDetailListActivity extends Activity implements
         @Override
         public void onKeywordSelected(List<String> selectedKeywords) {
             Log.d("Account", selectedKeywords.toString());
-            AccountDetailListActivity.this.mCurrentCostWayList.clear();
-            AccountDetailListActivity.this.mCurrentCostWayList
-                    .addAll(selectedKeywords);
+            ACUserPreferences.saveCostWay(selectedKeywords);
+            refreshData();
         }
     };
 
@@ -85,6 +84,8 @@ public class AccountDetailListActivity extends Activity implements
         Log.d("Account",
                 getString(R.string.format_year_month_day, year, monthOfYear,
                         dayOfMonth));
+        ACUserPreferences.saveFromDate(year + monthOfYear + dayOfMonth + "");
+        refreshData();
     }
 
     @Override
@@ -92,10 +93,43 @@ public class AccountDetailListActivity extends Activity implements
         Log.d("Account",
                 getString(R.string.format_year_month_day, year, monthOfYear,
                         dayOfMonth));
+        ACUserPreferences.saveFromDate(year + monthOfYear + dayOfMonth + "");
+        refreshData();
     }
 
-    private void refreshData(List<String> payMethod, List<String> costWay,
-            String fromDate, String toDate) {
+    @Override
+    public void onDateRuleSelected(DateRule rule) {
+        Log.d("Account", rule.toString());
+        ACUserPreferences.saveDateRule(rule);
+        refreshData();
+    }
+
+    private void refreshData() {
+        List<String> payMethod = ACUserPreferences.getPayMethods();
+        List<String> costWay = ACUserPreferences.getCostWay();
+        DateRule rule = ACUserPreferences.getDateRule();
+        String fromDate, toDate;
+        if (rule == DateRule.NONE) {
+            fromDate = ACUserPreferences.getFromDate();
+            toDate = ACUserPreferences.getToDate();
+        } else {
+            int lastDay = rule.getDay();
+            Calendar calendar = Calendar.getInstance();
+            Date nowDate = calendar.getTime();
+            int nowYear = calendar.get(Calendar.YEAR);
+            int nowMonthOfYear = calendar.get(Calendar.MONTH);
+            int nowWeekOfYear = calendar.get(Calendar.WEEK_OF_YEAR);
+            if (rule == DateRule.LAST_WEEK) {
+                calendar.set(Calendar.WEEK_OF_YEAR, nowWeekOfYear - 1);
+            } else if (rule == DateRule.LAST_MONTH) {
+                calendar.set(Calendar.MONTH, nowMonthOfYear - 1);
+            } else if (rule == DateRule.LAST_YEAR) {
+                calendar.set(Calendar.YEAR, nowYear - 1);
+            }
+            fromDate = nowDate.toString();
+            toDate = calendar.getTime().toString();
+        }
+
         ACDBHelper helper = ACDBHelper
                 .getInstance(this.getApplicationContext());
         StringBuilder queryWhereClause = new StringBuilder();
@@ -127,8 +161,8 @@ public class AccountDetailListActivity extends Activity implements
             }
         }
 
-        this.mAccountTablel.setDataAdapter(new SimpleTableDataAdapter(this,
-                data));
+        this.mAccountTable
+                .setDataAdapter(new SimpleTableDataAdapter(this, data));
     }
 
     private String[] convertAccountInfoToArray(AccountInfo info) {

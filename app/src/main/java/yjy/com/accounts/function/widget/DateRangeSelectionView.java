@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import yjy.com.accounts.R;
+import yjy.com.accounts.function.utility.DateRule;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -12,23 +13,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 /**
  * Created by mayongsheng on 16/3/23.
  */
 public class DateRangeSelectionView extends FrameLayout implements
-        View.OnClickListener {
+        View.OnClickListener, RadioGroup.OnCheckedChangeListener {
 
     public interface DateSelectedListener {
         void onFromDateSelected(int year, int monthOfYear, int dayOfMonth);
 
         void onToDateSelected(int year, int monthOfYear, int dayOfMonth);
+
+        void onDateRuleSelected(DateRule rule);
     }
 
     private TextView mTvTitle;
     private TextView mTvSelectedFromDate;
     private TextView mTvSelectedToDate;
+    private RadioGroup mRgDateRule;
+    private View mLlDateCustom;
     private DateSelectedListener mListener;
 
     public DateRangeSelectionView(Context context) {
@@ -57,6 +63,11 @@ public class DateRangeSelectionView extends FrameLayout implements
                 .findViewById(R.id.tv_selected_from_date);
         this.mTvSelectedToDate = (TextView) contentView
                 .findViewById(R.id.tv_selected_to_date);
+        this.mRgDateRule = (RadioGroup) contentView
+                .findViewById(R.id.rg_daterule);
+        this.mLlDateCustom = contentView.findViewById(R.id.ll_custom_date);
+        this.mLlDateCustom.setVisibility(View.GONE);
+        this.mRgDateRule.setOnCheckedChangeListener(this);
         this.mTvSelectedFromDate.setOnClickListener(this);
         this.mTvSelectedToDate.setOnClickListener(this);
         this.addView(contentView);
@@ -107,5 +118,35 @@ public class DateRangeSelectionView extends FrameLayout implements
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
         dialog.show();
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        switch (checkedId) {
+        case R.id.rb_custom:
+            this.mLlDateCustom.setVisibility(View.VISIBLE);
+            break;
+        case R.id.rb_lastweek:
+            this.mLlDateCustom.setVisibility(View.GONE);
+            if (this.mListener != null) {
+                this.mListener.onDateRuleSelected(DateRule.LAST_WEEK);
+            }
+            break;
+        case R.id.rb_lastmonth:
+            this.mLlDateCustom.setVisibility(View.GONE);
+            if (this.mListener != null) {
+                this.mListener.onDateRuleSelected(DateRule.LAST_MONTH);
+            }
+            break;
+        case R.id.rb_lastyear:
+            this.mLlDateCustom.setVisibility(View.GONE);
+            if (this.mListener != null) {
+                this.mListener.onDateRuleSelected(DateRule.LAST_YEAR);
+            }
+            break;
+        default:
+            this.mLlDateCustom.setVisibility(View.VISIBLE);
+            break;
+        }
     }
 }
