@@ -28,7 +28,7 @@ public class ACDBHelper {
             if (appContext == null){
                 appContext = context.getApplicationContext();
             }
-            instance.mDaoSession = ACApplication.getDaoSession(context);
+            instance.mDaoSession = ACApplication.getDaoSession();
             instance.accountInfoDao = instance.mDaoSession.getAccountInfoDao();
         }
         return instance;

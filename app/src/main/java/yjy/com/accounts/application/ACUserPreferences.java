@@ -1,10 +1,12 @@
 package yjy.com.accounts.application;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import yjy.com.accounts.R;
 import yjy.com.accounts.function.utility.DateRule;
 
 import android.content.Context;
@@ -23,29 +25,38 @@ public class ACUserPreferences {
     private static final String USER_PREFERENCE_SELECTED_TO_DATE = "user_preference_selected_to_date";
 
     public static List<String> getPayMethods() {
+        List<String> defaultList = Arrays.asList(ACApplication.mApp.getResources().getStringArray(R.array.pay_method));
         SharedPreferences preferences = ACApplication.getInstance()
                 .getSharedPreferences(USER_PREFERENCE_FILE_NAME,
                         Context.MODE_PRIVATE);
         Set<String> result = preferences.getStringSet(
                 USER_PREFERENCE_SELECTED_PAY_METHODS, null);
         if (result != null) {
-            return Arrays.asList((String[]) result.toArray());
+            for(String custom : result){
+                defaultList.add(custom);
+            }
         }
-
-        return null;
+        return defaultList;
     }
 
     public static List<String> getCostWay() {
+        List<String> defaultList = new ArrayList<>();
+
+        for(String use : ACApplication.mApp.getResources().getStringArray(R.array.usages)){
+            defaultList.add(use);
+        }
+
         SharedPreferences preferences = ACApplication.getInstance()
                 .getSharedPreferences(USER_PREFERENCE_FILE_NAME,
                         Context.MODE_PRIVATE);
         Set<String> result = preferences.getStringSet(
                 USER_PREFERENCE_SELECTED_COST_WAY, null);
         if (result != null) {
-            return Arrays.asList((String[]) result.toArray());
+            for(String custom : result){
+                defaultList.add(custom);
+            }
         }
-
-        return null;
+        return defaultList;
     }
 
     public static DateRule getDateRule() {

@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import yjy.com.accounts.R;
+import yjy.com.accounts.application.ACConst;
 import yjy.com.accounts.application.ACUserPreferences;
 import yjy.com.accounts.databases.AccountInfo;
 import yjy.com.accounts.databases.helper.ACDBHelper;
@@ -134,24 +135,30 @@ public class AccountDetailListActivity extends Activity implements
                 .getInstance(this.getApplicationContext());
         StringBuilder queryWhereClause = new StringBuilder();
         List<String> queryParam = new ArrayList<String>();
-        queryWhereClause.append("way IN (");
+        queryWhereClause.append("where way IN (");
         for (int i = 0; i < payMethod.size(); i++) {
             queryWhereClause.append("?,");
-            queryParam.add(payMethod.get(i));
+            queryParam.add(String.valueOf(ACConst.getWayInt(payMethod.get(i))));
         }
-        queryWhereClause.deleteCharAt(queryWhereClause.length());
+        queryWhereClause.deleteCharAt(queryWhereClause.length() - 1);
         queryWhereClause.append(") AND use IN (");
         for (int j = 0; j < costWay.size(); j++) {
             queryWhereClause.append("?,");
-            queryParam.add(costWay.get(j));
+            queryParam.add(String.valueOf(ACConst.getUseInt(costWay.get(j))));
         }
-        queryWhereClause.deleteCharAt(queryWhereClause.length());
-        queryWhereClause.append(") AND date >= ? date<= ?");
-        queryParam.add(fromDate);
-        queryParam.add(toDate);
+        queryWhereClause.deleteCharAt(queryWhereClause.length() - 1);
+        queryWhereClause.append(");");
+//        queryWhereClause.append(") AND date >= ? AND date <= ?;");
+//        queryParam.add(fromDate);
+//        queryParam.add(toDate);
 
+        Log.v("sql","where:" + queryWhereClause);
+
+        String[] queryParmArray = new String[queryParam.size()];
         List<AccountInfo> accountInfos = helper.queryAccount(
-                queryWhereClause.toString(), (String[]) queryParam.toArray());
+                queryWhereClause.toString(),  "4133","4133","4133","4133","4133","8264","8264","8264","8264","8264");
+
+
         int size = accountInfos.size();
         String[][] data = new String[5][size];
         for (int k = 0; k < size; k++) {
