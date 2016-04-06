@@ -14,7 +14,6 @@ public class ACDBHelper {
 
     private static final String TAG = ACDBHelper.class.getSimpleName();
     private static ACDBHelper instance;
-    private static Context appContext;
     private DaoSession mDaoSession;
     private AccountInfoDao accountInfoDao;
 
@@ -25,10 +24,7 @@ public class ACDBHelper {
     public static ACDBHelper getInstance(Context context) {
         if (instance == null) {
             instance = new ACDBHelper();
-            if (appContext == null){
-                appContext = context.getApplicationContext();
-            }
-            instance.mDaoSession = ACApplication.getDaoSession(context);
+            instance.mDaoSession = ACApplication.getDaoSession();
             instance.accountInfoDao = instance.mDaoSession.getAccountInfoDao();
         }
         return instance;
