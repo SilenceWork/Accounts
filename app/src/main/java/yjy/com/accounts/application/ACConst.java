@@ -20,51 +20,80 @@ public class ACConst {
     public static final int USE_MARKET = 0x2050;
     public static final int USE_OTHER = 0x2051;
 
-    public static final int[] uses = new int[]{ACConst.USE_EAT,ACConst.USE_TAXI,ACConst.USE_MARKET,ACConst.USE_OTHER};
+    public static final int[] uses = new int[]{ACConst.USE_EAT, ACConst.USE_TAXI, ACConst.USE_MARKET, ACConst.USE_OTHER};
 
-    public static int getUse(int index){
-        if(index < 0 || index > uses.length){
+    public static int getUse(int index) {
+        if (index < 0 || index > uses.length) {
             return -1;
         }
         return uses[index];
     }
 
-    public static String getWayString(int way){
+    public static String getWayString(int way) {
         int stringR;
-        switch (way){
+        switch (way) {
             case WAY_APAY:
-                stringR =  R.string.way_apay;
+                stringR = R.string.way_apay;
                 break;
             case WAY_WX:
-                stringR =  R.string.way_wx;
+                stringR = R.string.way_wx;
                 break;
             case WAY_CARD:
-                stringR =  R.string.way_card;
+                stringR = R.string.way_card;
                 break;
             case WAY_CASH:
-                stringR =  R.string.way_cash;
+                stringR = R.string.way_cash;
                 break;
             default:
-                stringR =  R.string.way_other;
+                stringR = R.string.way_other;
                 break;
         }
         return ACApplication.mApp.getResources().getString(stringR);
     }
 
-    public static String getUseString(int use){
+    public static int getWayInt(String way) {
+        if (ACApplication.mApp.getResources().getString(R.string.way_apay).equals(way)) {
+            return WAY_APAY;
+        }
+        if (ACApplication.mApp.getResources().getString(R.string.way_wx).equals(way)) {
+            return WAY_WX;
+        }
+        if (ACApplication.mApp.getResources().getString(R.string.way_card).equals(way)) {
+            return WAY_CARD;
+        }
+        if (ACApplication.mApp.getResources().getString(R.string.way_cash).equals(way)) {
+            return WAY_CASH;
+        }
+        return WAY_OTHER;
+    }
+
+    public static int getUseInt(String use) {
+        if (ACApplication.mApp.getResources().getString(R.string.use_eat).equals(use)) {
+            return USE_EAT;
+        }
+        if (ACApplication.mApp.getResources().getString(R.string.use_taxi).equals(use)) {
+            return USE_TAXI;
+        }
+        if (ACApplication.mApp.getResources().getString(R.string.use_market).equals(use)) {
+            return USE_MARKET;
+        }
+        return USE_OTHER;
+    }
+
+    public static String getUseString(int use) {
         int stringR;
-        switch (use){
+        switch (use) {
             case USE_EAT:
-                stringR =  R.string.use_eat;
+                stringR = R.string.use_eat;
                 break;
             case USE_TAXI:
-                stringR =  R.string.use_taxi;
+                stringR = R.string.use_taxi;
                 break;
             case USE_MARKET:
-                stringR =  R.string.use_market;
+                stringR = R.string.use_market;
                 break;
             default:
-                stringR =  R.string.use_other;
+                stringR = R.string.use_other;
                 break;
         }
         return ACApplication.mApp.getResources().getString(stringR);
