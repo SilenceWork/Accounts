@@ -57,41 +57,41 @@
                 android:textSize="20sp" />
 
             <RadioGroup
-                android:id="@+id/way_radiogroup"
+                android:id="@+id/pay_radiogroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/way_apay_radio"
+                    android:id="@+id/pay_apay_radio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="@string/way_apay"></RadioButton>
+                    android:text="@string/pay_apay"></RadioButton>
 
                 <RadioButton
-                    android:id="@+id/way_wx_radio"
+                    android:id="@+id/pay_wx_radio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/way_wx"></RadioButton>
+                    android:text="@string/pay_wx"></RadioButton>
 
                 <RadioButton
-                    android:id="@+id/way_card_radio"
+                    android:id="@+id/pay_card_radio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/way_card"></RadioButton>
+                    android:text="@string/pay_card"></RadioButton>
 
                 <RadioButton
-                    android:id="@+id/way_cash_radio"
+                    android:id="@+id/pay_cash_radio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/way_cash"></RadioButton>
+                    android:text="@string/pay_cash"></RadioButton>
 
                 <RadioButton
-                    android:id="@+id/way_other_radio"
+                    android:id="@+id/pay_other_radio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/way_other"></RadioButton>
+                    android:text="@string/pay_other"></RadioButton>
             </RadioGroup>
 
         </LinearLayout>

@@ -10,31 +10,16 @@
     <string name="action_settings">个人设置</string>
 
 
-    <string name="way_apay">支付宝</string>
-    <string name="way_wx">微信</string>
-    <string name="way_card">信用卡</string>
-    <string name="way_cash">现金</string>
-    <string name="way_other">其他</string>
+    <string name="pay_apay">支付宝</string>
+    <string name="pay_wx">微信</string>
+    <string name="pay_card">信用卡</string>
+    <string name="pay_cash">现金</string>
+    <string name="pay_other">其他</string>
 
     <string name="use_eat">吃饭</string>
     <string name="use_taxi">打车</string>
     <string name="use_market">超市</string>
     <string name="use_other">其他</string>
-
-    <string-array name="usages">
-        <item>吃饭</item>
-        <item>打车</item>
-        <item>超市</item>
-        <item>其他</item>
-    </string-array>
-
-    <string-array name="pay_method">
-        <item>支付宝</item>
-        <item>微信</item>
-        <item>信用卡</item>
-        <item>现金</item>
-        <item>其他</item>
-    </string-array>
 
     <string name="last_week">一周内</string>
     <string name="last_month">一个月内</string>

@@ -8,6 +8,7 @@ import java.util.List;
 import yjy.com.accounts.R;
 import yjy.com.accounts.application.ACConst;
 import yjy.com.accounts.application.ACUserPreferences;
+import yjy.com.accounts.control.TagsController;
 import yjy.com.accounts.databases.AccountInfo;
 import yjy.com.accounts.databases.helper.ACDBHelper;
 import yjy.com.accounts.function.utility.DateRule;
@@ -51,12 +52,10 @@ public class AccountDetailListActivity extends Activity implements
         this.mDateSelectionView.setDateSelectedListener(this);
         this.mPayMethodSelectionView
                 .setOnKeywordSelectedListener(mPayMethodSelectedListener);
-        this.mPayMethodSelectionView.setKeywords(getResources().getStringArray(
-                R.array.pay_method));
+        this.mPayMethodSelectionView.setKeywords(TagsController.getController().getPayMethodList());
         this.mCostWaySelectionView
                 .setOnKeywordSelectedListener(mCostWaySelectedListener);
-        this.mCostWaySelectionView.setKeywords(getResources().getStringArray(
-                R.array.usages));
+        this.mCostWaySelectionView.setKeywords(TagsController.getController().getUsageList());
         this.mAccountTable = (TableView<String[]>) findViewById(R.id.tv_cost_detail);
     }
 
@@ -106,8 +105,8 @@ public class AccountDetailListActivity extends Activity implements
     }
 
     private void refreshData() {
-        List<String> payMethod = ACUserPreferences.getPayMethods();
-        List<String> costWay = ACUserPreferences.getCostWay();
+        List<String> payMethodList = TagsController.getController().getPayMethodList();
+        List<String> usageList = TagsController.getController().getUsageList();
         DateRule rule = ACUserPreferences.getDateRule();
         String fromDate, toDate;
         if (rule == DateRule.NONE) {
@@ -135,16 +134,16 @@ public class AccountDetailListActivity extends Activity implements
                 .getInstance(this.getApplicationContext());
         StringBuilder queryWhereClause = new StringBuilder();
         List<String> queryParam = new ArrayList<String>();
-        queryWhereClause.append("where way IN (");
-        for (int i = 0; i < payMethod.size(); i++) {
+        queryWhereClause.append("where paymethod IN (");
+        for (int i = 0; i < payMethodList.size(); i++) {
             queryWhereClause.append("?,");
-            queryParam.add(String.valueOf(ACConst.getWayInt(payMethod.get(i))));
+            queryParam.add(payMethodList.get(i));
         }
         queryWhereClause.deleteCharAt(queryWhereClause.length() - 1);
-        queryWhereClause.append(") AND use IN (");
-        for (int j = 0; j < costWay.size(); j++) {
+        queryWhereClause.append(") AND usage IN (");
+        for (int j = 0; j < usageList.size(); j++) {
             queryWhereClause.append("?,");
-            queryParam.add(String.valueOf(ACConst.getUseInt(costWay.get(j))));
+            queryParam.add(usageList.get(j));
         }
         queryWhereClause.deleteCharAt(queryWhereClause.length() - 1);
         queryWhereClause.append(");");
@@ -155,8 +154,11 @@ public class AccountDetailListActivity extends Activity implements
         Log.v("sql","where:" + queryWhereClause);
 
         String[] queryParmArray = new String[queryParam.size()];
+        for(int i = 0;i< queryParam.size();i++ ){
+            queryParmArray[i] = queryParam.get(i);
+        }
         List<AccountInfo> accountInfos = helper.queryAccount(
-                queryWhereClause.toString(),  "4133","4133","4133","4133","4133","8264","8264","8264","8264","8264");
+                queryWhereClause.toString(),  queryParmArray);
 
 
         int size = accountInfos.size();
@@ -175,8 +177,8 @@ public class AccountDetailListActivity extends Activity implements
     private String[] convertAccountInfoToArray(AccountInfo info) {
         String[] result = new String[5];
         result[0] = String.valueOf(info.getDate());
-        result[1] = String.valueOf(info.getWay());
-        result[2] = String.valueOf(info.getUse());
+        result[1] = String.valueOf(info.getPaymethod());
+        result[2] = String.valueOf(info.getUsage());
         result[3] = String.valueOf(info.getCost());
         result[4] = info.getRemark();
 

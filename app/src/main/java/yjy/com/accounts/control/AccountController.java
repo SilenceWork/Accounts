@@ -26,11 +26,11 @@ public class AccountController {
     }
 
 
-    public boolean saveAccount(double coast,int way,int use,String remark){
+    public boolean saveAccount(double coast,String payMethod,String usage,String remark){
         AccountInfo accountInfo = new AccountInfo();
         accountInfo.setCost(coast);
-        accountInfo.setWay(way);
-        accountInfo.setUse(use);
+        accountInfo.setPaymethod(payMethod);
+        accountInfo.setUsage(usage);
         accountInfo.setRemark(remark);
         accountInfo.setDate(Calendar.getInstance().getTime());
         return ACDBHelper.getInstance(context).saveAccount(accountInfo) > 0;

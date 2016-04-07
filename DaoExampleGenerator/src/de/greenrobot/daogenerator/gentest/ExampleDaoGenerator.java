@@ -40,8 +40,8 @@ public class ExampleDaoGenerator {
     /**
      * int      ID      主键ID
      * double   coast   花费金额
-     * int      way     支付方式
-     * int      use     用途
+     * String      paymethod     支付方式
+     * String      usage     用途
      * String   remark  备注
      * date     date    时间
      *
@@ -51,8 +51,8 @@ public class ExampleDaoGenerator {
         Entity note = schema.addEntity("AccountInfo");
         note.addIdProperty().primaryKey().autoincrement();
         note.addDoubleProperty("cost").notNull();
-        note.addIntProperty("way").notNull();
-        note.addIntProperty("use").notNull();
+        note.addStringProperty("paymethod").notNull();
+        note.addStringProperty("usage").notNull();
         note.addStringProperty("remark").notNull();
         note.addDateProperty("date").notNull();
     }

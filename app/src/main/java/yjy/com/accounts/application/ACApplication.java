@@ -2,6 +2,7 @@ package yjy.com.accounts.application;
 
 import yjy.com.accounts.databases.DaoMaster;
 import yjy.com.accounts.databases.DaoSession;
+import yjy.com.accounts.function.init.ApplicationInit;
 
 import android.app.Application;
 
@@ -45,6 +46,7 @@ public class ACApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mApp = this;
+        (new ApplicationInit()).init();
     }
 
     public static ACApplication getInstance() {

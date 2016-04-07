@@ -24,39 +24,36 @@ public class ACUserPreferences {
     private static final String USER_PREFERENCE_SELECTED_FROM_DATE = "user_preference_selected_from_date";
     private static final String USER_PREFERENCE_SELECTED_TO_DATE = "user_preference_selected_to_date";
 
-    public static List<String> getPayMethods() {
-        List<String> defaultList = Arrays.asList(ACApplication.mApp.getResources().getStringArray(R.array.pay_method));
+    public static List<String> getCustomerPayMethods() {
         SharedPreferences preferences = ACApplication.getInstance()
                 .getSharedPreferences(USER_PREFERENCE_FILE_NAME,
                         Context.MODE_PRIVATE);
         Set<String> result = preferences.getStringSet(
                 USER_PREFERENCE_SELECTED_PAY_METHODS, null);
+        List<String> customerPayMethodList = null;
         if (result != null) {
+            customerPayMethodList = new ArrayList<>();
             for(String custom : result){
-                defaultList.add(custom);
+                customerPayMethodList.add(custom);
             }
         }
-        return defaultList;
+        return customerPayMethodList;
     }
 
-    public static List<String> getCostWay() {
-        List<String> defaultList = new ArrayList<>();
-
-        for(String use : ACApplication.mApp.getResources().getStringArray(R.array.usages)){
-            defaultList.add(use);
-        }
-
+    public static List<String> getCustomerUsageList() {
         SharedPreferences preferences = ACApplication.getInstance()
                 .getSharedPreferences(USER_PREFERENCE_FILE_NAME,
                         Context.MODE_PRIVATE);
         Set<String> result = preferences.getStringSet(
                 USER_PREFERENCE_SELECTED_COST_WAY, null);
+        List<String> customerUsageList = null;
         if (result != null) {
+            customerUsageList = new ArrayList<>();
             for(String custom : result){
-                defaultList.add(custom);
+                customerUsageList.add(custom);
             }
         }
-        return defaultList;
+        return customerUsageList;
     }
 
     public static DateRule getDateRule() {

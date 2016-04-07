@@ -4,8 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import yjy.com.accounts.R;
-import yjy.com.accounts.application.ACConst;
 import yjy.com.accounts.control.AccountController;
+import yjy.com.accounts.control.TagsController;
 import yjy.com.accounts.databases.AccountInfo;
 import yjy.com.accounts.function.list.AccountDetailListActivity;
 
@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -30,14 +31,15 @@ import android.widget.Toast;
 public class AccountActivity extends AppCompatActivity {
 
     private EditText cost_edt;
-    private RadioGroup way_radiogroup;
+    private RadioGroup pay_radiogroup;
 
     private Spinner use_spinner;
     private EditText remark_edt;
 
-    private double mCost = 0;;
-    private int mWay = -1;
-    private int mUse = -1;
+    private String mPayMethod = "";
+    private String mUsage = "";
+    private double mCost = 0;
+    ;
     private String mRemark;
 
     @Override
@@ -63,45 +65,26 @@ public class AccountActivity extends AppCompatActivity {
 
         cost_edt = (EditText) findViewById(R.id.cost_edt);
 
-        way_radiogroup = (RadioGroup) findViewById(R.id.way_radiogroup);
-        way_radiogroup
+        pay_radiogroup = (RadioGroup) findViewById(R.id.pay_radiogroup);
+        pay_radiogroup
                 .setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                        switch (radioGroup.getCheckedRadioButtonId()) {
-                        case R.id.way_apay_radio:
-                            mWay = ACConst.WAY_APAY;
-                            break;
-                        case R.id.way_wx_radio:
-                            mWay = ACConst.WAY_WX;
-                            break;
-                        case R.id.way_cash_radio:
-                            mWay = ACConst.WAY_CASH;
-                            break;
-                        case R.id.way_card_radio:
-                            mWay = ACConst.WAY_CARD;
-                            break;
-                        case R.id.way_other_radio:
-                            mWay = ACConst.WAY_OTHER;
-                            break;
-                        default:
-                            break;
-                        }
+                        mPayMethod = ((RadioButton) findViewById(i)).getText().toString();
                     }
                 });
-        way_radiogroup.check(R.id.way_card_radio);
+        pay_radiogroup.check(R.id.pay_card_radio);
 
         use_spinner = (Spinner) findViewById(R.id.use_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, getResources()
-                        .getStringArray(R.array.usages));
+                android.R.layout.simple_spinner_item, TagsController.getController().getUsageList());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         use_spinner.setAdapter(adapter);
         use_spinner
                 .setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
                     public void onItemSelected(AdapterView<?> arg0, View arg1,
-                            int arg2, long arg3) {
-                        mUse = ACConst.getUse(arg2);
+                                               int arg2, long arg3) {
+                        mUsage = TagsController.getController().getUsageList().get(arg2);
                     }
 
                     public void onNothingSelected(AdapterView<?> arg0) {
@@ -137,7 +120,7 @@ public class AccountActivity extends AppCompatActivity {
     private void addAccount() {
         if (checkAccount()) {
             boolean result = AccountController.getController().saveAccount(
-                    mCost, mWay, mUse, mRemark);
+                    mCost, mPayMethod, mUsage, mRemark);
             if (result) {
                 Toast.makeText(this, "已入账", Toast.LENGTH_LONG).show();
                 reset();
@@ -150,7 +133,7 @@ public class AccountActivity extends AppCompatActivity {
 
     private void reset() {
         cost_edt.setText("");
-        way_radiogroup.check(R.id.way_apay_radio);
+        pay_radiogroup.check(R.id.pay_apay_radio);
         use_spinner.setSelection(0);
         remark_edt.setText("");
     }
@@ -165,7 +148,7 @@ public class AccountActivity extends AppCompatActivity {
             Toast.makeText(this, "花费不能为空", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (mWay < 0 || mUse < 0) {
+        if (TextUtils.isEmpty(mPayMethod) || TextUtils.isEmpty(mUsage)) {
             Toast.makeText(this, "用途、方式 数据异常。 检查常量对应关系", Toast.LENGTH_LONG)
                     .show();
             return false;
@@ -197,9 +180,9 @@ public class AccountActivity extends AppCompatActivity {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("KEY ID:" + info.getId() + "\n");
         stringBuilder.append("COST:" + info.getCost() + "\n");
-        stringBuilder.append("WAY:" + ACConst.getWayString(info.getWay())
+        stringBuilder.append("PayMethod:" + info.getPaymethod()
                 + "\n");
-        stringBuilder.append("USE:" + ACConst.getUseString(info.getUse())
+        stringBuilder.append("Usage:" + info.getUsage()
                 + "\n");
         stringBuilder.append("REMARK:" + info.getRemark() + "\n");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

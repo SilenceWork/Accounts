@@ -25,8 +25,8 @@ public class AccountInfoDao extends AbstractDao<AccountInfo, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Cost = new Property(1, double.class, "cost", false, "COST");
-        public final static Property Way = new Property(2, int.class, "way", false, "WAY");
-        public final static Property Use = new Property(3, int.class, "use", false, "USE");
+        public final static Property Paymethod = new Property(2, String.class, "paymethod", false, "PAYMETHOD");
+        public final static Property Usage = new Property(3, String.class, "usage", false, "USAGE");
         public final static Property Remark = new Property(4, String.class, "remark", false, "REMARK");
         public final static Property Date = new Property(5, java.util.Date.class, "date", false, "DATE");
     };
@@ -46,8 +46,8 @@ public class AccountInfoDao extends AbstractDao<AccountInfo, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"ACCOUNT_INFO\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"COST\" REAL NOT NULL ," + // 1: cost
-                "\"WAY\" INTEGER NOT NULL ," + // 2: way
-                "\"USE\" INTEGER NOT NULL ," + // 3: use
+                "\"PAYMETHOD\" TEXT NOT NULL ," + // 2: paymethod
+                "\"USAGE\" TEXT NOT NULL ," + // 3: usage
                 "\"REMARK\" TEXT NOT NULL ," + // 4: remark
                 "\"DATE\" INTEGER NOT NULL );"); // 5: date
     }
@@ -68,8 +68,8 @@ public class AccountInfoDao extends AbstractDao<AccountInfo, Long> {
             stmt.bindLong(1, id);
         }
         stmt.bindDouble(2, entity.getCost());
-        stmt.bindLong(3, entity.getWay());
-        stmt.bindLong(4, entity.getUse());
+        stmt.bindString(3, entity.getPaymethod());
+        stmt.bindString(4, entity.getUsage());
         stmt.bindString(5, entity.getRemark());
         stmt.bindLong(6, entity.getDate().getTime());
     }
@@ -86,8 +86,8 @@ public class AccountInfoDao extends AbstractDao<AccountInfo, Long> {
         AccountInfo entity = new AccountInfo( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getDouble(offset + 1), // cost
-            cursor.getInt(offset + 2), // way
-            cursor.getInt(offset + 3), // use
+            cursor.getString(offset + 2), // paymethod
+            cursor.getString(offset + 3), // usage
             cursor.getString(offset + 4), // remark
             new java.util.Date(cursor.getLong(offset + 5)) // date
         );
@@ -99,8 +99,8 @@ public class AccountInfoDao extends AbstractDao<AccountInfo, Long> {
     public void readEntity(Cursor cursor, AccountInfo entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setCost(cursor.getDouble(offset + 1));
-        entity.setWay(cursor.getInt(offset + 2));
-        entity.setUse(cursor.getInt(offset + 3));
+        entity.setPaymethod(cursor.getString(offset + 2));
+        entity.setUsage(cursor.getString(offset + 3));
         entity.setRemark(cursor.getString(offset + 4));
         entity.setDate(new java.util.Date(cursor.getLong(offset + 5)));
      }

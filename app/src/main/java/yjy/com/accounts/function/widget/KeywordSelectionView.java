@@ -66,8 +66,8 @@ public class KeywordSelectionView extends FrameLayout {
         this.mListener = listener;
     }
 
-    public void setKeywords(String[] keywordList) {
-        this.mKeywords.addAll(Arrays.asList(keywordList));
+    public void setKeywords(List<String> keywords) {
+        this.mKeywords.addAll(keywords);
     }
 
     private void createKeywordFlowlayout(FlowLayout flowLayout,
